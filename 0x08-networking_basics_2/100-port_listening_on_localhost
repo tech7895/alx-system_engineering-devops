@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
-nc -l 98
+# This script istens on port 98 on localhost
+
+nc -l localhost 98
