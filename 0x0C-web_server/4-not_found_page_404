@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
-# script to install and setup nginx
-apt-get -y update
-apt-get -y install nginx
-echo "Hello World!" > /var/www/html/index.nginx-debian.html
-sed -i "/server_name _;/ a\\\trewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/custom_404.html
-sed -i "/redirect_me/ a\\\terror_page 404 /custom_404.html;" /etc/nginx/sites-available/default
-service nginx restart
+
+# Install Nginx
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Create the custom 404 error page
+sudo sh -c 'echo "<!DOCTYPE html><html><head><title>404 Not Found</title></head><body><h1>404 Not Found</h1><p>Ceci n'"'"'est pas une page</p></body></html>" > /usr/share/nginx/html/404.html'
+
+# Configure Nginx to use the custom error page for 404 errors
+sudo sed -i 's/#error_page 404/error_page 404 \/404.html;/g' /etc/nginx/sites-available/default
+
+# Restart Nginx to apply changes
+sudo systemctl restart nginx
+
+# Display success message
+echo "Nginx configured to serve custom 404 error page."
+
