@@ -41,7 +41,7 @@ frontend biruk12-frontend
         default_backend biruk12-backend
 
 frontend biruk12-frontend-https
-        bind *:443 ssl crt /etc/haproxy/certs/biruk12.tech.pem
+        bind *:443 ssl crt /etc/haproxy/certs/www.biruk12.tech.pem
         http-request set-header X-Forwarded-Proto https
         default_backend biruk12-backend
 
